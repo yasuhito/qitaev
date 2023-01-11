@@ -81,7 +81,7 @@ build_output_path="${build_dir_path}/v${version}_${config}"
 symbols=''
 
 if [[ $config == 'debug' ]]; then
-  symbols='tostring,dump'
+  symbols='tostring,dump,assert'
 elif [[ $config == 'release' ]]; then
   # usually release has no symbols except those that help making the code more compact
   # in this game project we define 'release' as a special symbol for that

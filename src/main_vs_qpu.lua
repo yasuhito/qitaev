@@ -1,3 +1,5 @@
+require("lib/helpers")
+
 require("lib/board")
 require("lib/cursor")
 require("lib/game")

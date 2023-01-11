@@ -1,7 +1,5 @@
 ---@diagnostic disable: lowercase-global, global-in-nil-env
 
-require("lib/helpers")
-
 cursor_class = new_class()
 
 function cursor_class._init(_ENV)
@@ -9,7 +7,7 @@ function cursor_class._init(_ENV)
 end
 
 function cursor_class.init(_ENV)
-  x, y, _tick = 3, 11, 0
+  x, y, _tick = 3, 6, 0
 end
 
 function cursor_class.move_left(_ENV)
@@ -24,15 +22,15 @@ function cursor_class.move_right(_ENV, cols)
   end
 end
 
-function cursor_class.move_up(_ENV)
-  if y > 7 then
-    y = y - 1
+function cursor_class.move_up(_ENV, rows)
+  if y < rows then
+    y = y + 1
   end
 end
 
-function cursor_class.move_down(_ENV, rows)
-  if y < rows then
-    y = y + 1
+function cursor_class.move_down(_ENV)
+  if y > 1 then
+    y = y - 1
   end
 end
 

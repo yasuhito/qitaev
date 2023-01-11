@@ -160,11 +160,12 @@ describe('連鎖 (chain)', function()
     board.blocks[2][15].type = "y"
 
     -- 1 マス落下
-    for i = 1, 4 do
+    for i = 1, 12 do
       board:update()
     end
 
     -- 落下完了
+    board:update()
     board:update()
 
     -- YY がマッチ

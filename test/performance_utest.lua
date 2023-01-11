@@ -1,4 +1,5 @@
 require("engine/test/bustedhelper")
+require("lib/helpers")
 require("lib/cursor")
 require("lib/qpu")
 require("lib/game")
@@ -6,7 +7,7 @@ require("lib/board")
 
 local profiler = require("lib/profiler")
 
-describe('パフォーマンス', function()
+describe('パフォーマンス #solo', function()
   it("QPU vs QPU のプロファイルを取る", function()
     local qpu1_cursor = cursor_class()
     local qpu2_cursor = cursor_class()

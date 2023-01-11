@@ -1,4 +1,5 @@
 require("engine/test/bustedhelper")
+require("lib/helpers")
 require("lib/garbage_block")
 require("lib/board")
 require("lib/cursor")

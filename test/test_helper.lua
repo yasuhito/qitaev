@@ -1,3 +1,4 @@
+require("lib/helpers")
 require("lib/block")
 
 function wait_swap_to_finish(board)

@@ -1,7 +1,5 @@
 ---@diagnostic disable: global-in-nil-env, lowercase-global, unbalanced-assignments, undefined-field, undefined-global
 
-require("lib/helpers")
-
 --- @class block_class
 --- @field type "i" | "h" | "x" | "y" | "z" | "s" | "t" | "control" | "cnot_x" | "swap" | "g" | "?" block type
 --- @field span 1 | 2 | 3 | 4 | 5 | 6 span of the block
@@ -13,7 +11,7 @@ require("lib/helpers")
 block_class = new_class()
 block_class.block_match_animation_frame_count = 45
 block_class.block_match_delay_per_block = 8
-block_class.block_swap_animation_frame_count = 4
+block_class.block_swap_animation_frame_count = 3
 block_class.sprites = {
   -- default|landed|match|bouncing
   h = "0|1,1,1,1,3,3,2,2,2,1,1,1|24,24,24,25,25,25,24,24,24,26,26,26,0,0,0,27|0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,2,2,2,2",
@@ -55,6 +53,10 @@ function block_class:is_idle()
   return self._state == "idle"
 end
 
+function block_class:is_hover()
+  return self._state == "hover"
+end
+
 function block_class.is_fallable(_ENV)
   return not (type == "i" or type == "?" or is_swapping(_ENV) or is_freeze(_ENV))
 end
@@ -90,6 +92,10 @@ function block_class:_is_swapping_with_right()
   return self._state == "swapping_with_right"
 end
 
+function block_class:is_swappable_state()
+  return self:is_idle() or self:is_falling()
+end
+
 function block_class:is_empty()
   return self.type == "i" and not self:is_swapping()
 end
@@ -106,6 +112,11 @@ end
 function block_class:swap_with(direction)
   self.chain_id = nil
   self:change_state("swapping_with_" .. direction)
+end
+
+function block_class:hover(timer)
+  self.timer = timer or 12
+  self:change_state("hover")
 end
 
 function block_class:fall()
@@ -152,8 +163,12 @@ function block_class.update(_ENV)
       chain_id = nil
       change_state(_ENV, "idle")
     end
-  elseif is_falling(_ENV) then
-    -- NOP
+  elseif is_hover(_ENV) then
+    if timer > 0 then
+      timer = timer - 1
+    else
+      change_state(_ENV, "idle")
+    end
   elseif is_match(_ENV) then
     if _tick_match <= block_match_animation_frame_count + _match_index * block_match_delay_per_block then
       _tick_match = _tick_match + 1
@@ -250,22 +265,23 @@ end
 --#if debug
 local type_string = {
   i = '_',
-  control = 'C',
-  cnot_x = 'X',
-  swap = 'S'
+  control = '●',
+  cnot_x = '+',
+  swap = 'X'
 }
 
 local state_string = {
   idle = " ",
   swapping_with_left = "<",
   swapping_with_right = ">",
+  hover = "^",
   falling = "|",
   match = "*",
   freeze = "f",
 }
 
 function block_class:_tostring()
-  return (type_string[self.type] or self.type) .. state_string[self._state]
+  return (type_string[self.type] or self.type:upper()) .. state_string[self._state]
 end
 
 --#endif

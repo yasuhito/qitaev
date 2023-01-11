@@ -1,5 +1,7 @@
 ---@diagnostic disable: lowercase-global
 
+require("lib/helpers")
+
 require("lib/cursor")
 require("lib/qpu")
 require("title/game")

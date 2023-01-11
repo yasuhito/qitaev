@@ -1,3 +1,5 @@
+require("lib/helpers")
+
 require("lib/cursor")
 require("lib/qpu")
 require("lib/game")

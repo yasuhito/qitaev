@@ -1,5 +1,3 @@
-require("lib/helpers")
-
 local effect_set = new_class()
 
 function effect_set:_init()

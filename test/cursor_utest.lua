@@ -1,7 +1,7 @@
 require("engine/test/bustedhelper")
 require("lib/cursor")
 
-describe('cursor', function()
+describe('cursor #solo', function()
   local cursor
 
   before_each(function()
@@ -11,7 +11,7 @@ describe('cursor', function()
   describe('constructor', function()
     it('should be placed at x = 3, y = 6 by default', function()
       assert.are_equal(3, cursor.x)
-      assert.are_equal(11, cursor.y)
+      assert.are_equal(6, cursor.y)
     end)
   end)
 
@@ -20,7 +20,7 @@ describe('cursor', function()
       cursor:move_left()
 
       assert.are_equal(2, cursor.x)
-      assert.are_equal(11, cursor.y)
+      assert.are_equal(6, cursor.y)
     end)
 
     it("should not move any further to the left when reaching the left edge", function()
@@ -30,7 +30,7 @@ describe('cursor', function()
       cursor:move_left()
 
       assert.are_equal(1, cursor.x)
-      assert.are_equal(11, cursor.y)
+      assert.are_equal(6, cursor.y)
     end)
   end)
 
@@ -39,7 +39,7 @@ describe('cursor', function()
       cursor:move_right(6)
 
       assert.are_equal(4, cursor.x)
-      assert.are_equal(11, cursor.y)
+      assert.are_equal(6, cursor.y)
     end)
 
     it("should not move any further to the right when reaching the right edge", function()
@@ -49,56 +49,52 @@ describe('cursor', function()
       cursor:move_right(6)
 
       assert.are_equal(5, cursor.x)
-      assert.are_equal(11, cursor.y)
+      assert.are_equal(6, cursor.y)
     end)
   end)
 
   describe('move_up', function()
     it("should move up", function()
-      cursor:move_up()
-
-      assert.are_equal(3, cursor.x)
-      assert.are_equal(10, cursor.y)
-    end)
-
-    it("should not move any upper when reaching the dead line", function()
-      cursor:move_up() -- y = 10
-      cursor:move_up() -- y = 9
-      cursor:move_up() -- y = 8
-      cursor:move_up() -- y = 7
-
-      cursor:move_up()
+      cursor:move_up(12)
 
       assert.are_equal(3, cursor.x)
       assert.are_equal(7, cursor.y)
+    end)
+
+    it("should not move any upper when reaching the dead line", function()
+      cursor:move_up(12) -- y = 7
+      cursor:move_up(12) -- y = 8
+      cursor:move_up(12) -- y = 9
+      cursor:move_up(12) -- y = 10
+      cursor:move_up(12) -- y = 11
+      cursor:move_up(12) -- y = 12
+
+      cursor:move_up(12)
+
+      assert.are_equal(3, cursor.x)
+      assert.are_equal(12, cursor.y)
     end)
   end)
 
   describe('move_down', function()
     it("should move down", function()
-      cursor:move_down(17)
+      cursor:move_down()
 
       assert.are_equal(3, cursor.x)
-      assert.are_equal(12, cursor.y)
+      assert.are_equal(5, cursor.y)
     end)
 
     it("should not move any further down when reaching the bottom", function()
-      cursor:move_down(17) -- y = 7
-      cursor:move_down(17) -- y = 8
-      cursor:move_down(17) -- y = 9
-      cursor:move_down(17) -- y = 10
-      cursor:move_down(17) -- y = 11
-      cursor:move_down(17) -- y = 12
-      cursor:move_down(17) -- y = 13
-      cursor:move_down(17) -- y = 14
-      cursor:move_down(17) -- y = 15
-      cursor:move_down(17) -- y = 16
-      cursor:move_down(17) -- y = 17
+      cursor:move_down() -- y = 5
+      cursor:move_down() -- y = 4
+      cursor:move_down() -- y = 3
+      cursor:move_down() -- y = 2
+      cursor:move_down() -- y = 1
 
-      cursor:move_down(17)
+      cursor:move_down()
 
       assert.are_equal(3, cursor.x)
-      assert.are_equal(17, cursor.y)
+      assert.are_equal(1, cursor.y)
     end)
   end)
 

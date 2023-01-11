@@ -34,7 +34,7 @@ function game.update(_ENV)
           board:put(x, board.row_next_blocks, new_block)
         end
 
-        cursor:move_up()
+        cursor:move_up(board.rows)
       end
     else
       _state = ":idle"
@@ -54,11 +54,11 @@ function game.update(_ENV)
       end
       if player.up then
         sfx(8)
-        cursor:move_up()
+        cursor:move_up(board.rows)
       end
       if player.down then
         sfx(8)
-        cursor:move_down(board.rows)
+        cursor:move_down()
       end
       if player.x and board:swap(cursor.x, cursor.y) then
         sfx(10)

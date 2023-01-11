@@ -1,6 +1,5 @@
 ---@diagnostic disable: global-in-nil-env, lowercase-global
 
-require("lib/helpers")
 require("lib/attack_ion")
 require("lib/bubble")
 require("lib/particle")
@@ -90,16 +89,16 @@ function game()
         end
         if player.up then
           sfx(8)
-          cursor:move_up()
+          cursor:move_up(board.rows)
         end
         if player.down then
           sfx(8)
-          cursor:move_down(board.rows)
+          cursor:move_down()
         end
         if player.x and board:swap(cursor.x, cursor.y) then
           sfx(10)
         end
-        if player.o and board.top_block_y > 2 then
+        if player.o then
           _raise(_ENV, each)
         end
 
@@ -131,7 +130,7 @@ function game()
       if board.raised_dots == 8 then
         board.raised_dots = 0
         board:insert_blocks_at_bottom()
-        board.cursor:move_up()
+        board.cursor:move_up(board.rows)
       end
     end
   }, { __index = _ENV })
